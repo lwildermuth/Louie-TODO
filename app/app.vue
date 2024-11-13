@@ -21,7 +21,7 @@ useHead({
 
 useSeoMeta({
   viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-  title: 'Atidone',
+  title: 'LOUIE TODO',
   description:
     'A Nuxt demo hosted with edge-side rendering, authentication and queyring a Cloudflare D1 database',
   ogImage: '/social-image.png',
@@ -42,6 +42,13 @@ const items = [
 
 <template>
   <UContainer class="min-h-screen flex flex-col my-4">
+
+    <h3 class="text-lg font-semibold leading-6">
+      <NuxtLink to="/">
+        Yeah, Louie's such a good boy, who's a good boy
+      </NuxtLink>
+    </h3>
+
     <div class="mb-2 text-right">
       <UButton
         square
@@ -54,11 +61,6 @@ const items = [
 
     <UCard>
       <template #header>
-        <h3 class="text-lg font-semibold leading-6">
-          <NuxtLink to="/">
-            Atidone
-          </NuxtLink>
-        </h3>
         <UButton
           v-if="!loggedIn"
           to="/api/auth/github"
