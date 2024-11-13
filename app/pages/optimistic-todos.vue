@@ -185,7 +185,7 @@ const { mutate: deleteTodo } = useMutation({
         v-model="newTodo"
         name="todo"
         class="flex-1"
-        placeholder="Make a Nuxt demo"
+        placeholder="Add a todo..."
         autocomplete="off"
         autofocus
         :ui="{ wrapper: 'flex-1' }"

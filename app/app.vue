@@ -60,19 +60,9 @@ const items = [
     </div>
 
     <UCard>
-      <template #header>
-        <UButton
-          v-if="!loggedIn"
-          to="/api/auth/github"
-          icon="i-simple-icons-github"
-          label="Login with GitHub"
-          color="black"
-          size="xs"
-          external
-        />
+      <template #header v-if="loggedIn">
         <div
-          v-else
-          class="flex flex-wrap -mx-2 sm:mx-0"
+          class="flex flex-wrap justify-end -mx-2 sm:mx-0 w-full"
         >
           <UButton
             to="/todos"
@@ -112,19 +102,19 @@ const items = [
 
     <footer v-if="loggedIn" class="text-center mt-2">
       <NuxtLink
-        href="https://github.com/atinux/atidone"
+        href=""
         target="_blank"
         class="text-sm text-gray-500 hover:text-gray-700"
       >
-        GitHub
+        We can make these link to anywhere
       </NuxtLink>
       ·
       <NuxtLink
-        href="https://twitter.com/atinux"
+        href=""
         target="_blank"
         class="text-sm text-gray-500 hover:text-gray-700"
       >
-        Twitter
+        This would be another link
       </NuxtLink>
     </footer>
   </UContainer>
