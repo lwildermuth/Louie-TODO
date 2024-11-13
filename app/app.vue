@@ -43,9 +43,9 @@ const items = [
 <template>
   <UContainer class="min-h-screen flex flex-col my-4">
 
-    <h3 class="text-lg font-semibold leading-6">
+    <h3 class="text-lg font-semibold leading-6 text-center">
       <NuxtLink to="/">
-        Yeah, Louie's such a good boy, who's a good boy
+        Yeah, That's such a good Louie!! 
       </NuxtLink>
     </h3>
 
@@ -110,7 +110,7 @@ const items = [
       <NuxtPage />
     </UCard>
 
-    <footer class="text-center mt-2">
+    <footer v-if="loggedIn" class="text-center mt-2">
       <NuxtLink
         href="https://github.com/atinux/atidone"
         target="_blank"
