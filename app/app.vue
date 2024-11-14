@@ -71,8 +71,16 @@ const items = [
           </NuxtLink>
         </h3>
 
+        <UButton
+          square
+          color="white"
+          icon="i-heroicons-bars-3"
+          @click="toggleMobileMenu"
+          class="flex sm:hidden"
+        />
+
         <div
-          class="flex flex-wrap justify-end -mx-2 sm:mx-0"
+          class="hidden sm:flex flex-wrap justify-end -mx-2 sm:mx-0 "
           v-if="loggedIn"
         >
           <UButton
