@@ -32,7 +32,7 @@ export default defineNuxtConfig({
         // iOS Status Bar Style
         { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
         { name: 'apple-mobile-web-app-capable', content: 'yes' },
-        { name: 'apple-mobile-web-app-title', content: 'Your App Name' },
+        { name: 'apple-mobile-web-app-title', content: 'LOUIE TODO' },
       ]
     }
   },
