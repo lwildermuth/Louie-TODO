@@ -86,8 +86,7 @@ const items = [
             :items="items"
           >
             <UButton
-              color="gray"
-              variant="ghost"
+              color="white"
               trailing-icon="i-heroicons-chevron-down-20-solid"
             >
               <UAvatar
