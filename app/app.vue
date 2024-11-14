@@ -31,13 +31,6 @@ useSeoMeta({
   twitterCard: 'summary_large_image'
 })
 
-const navigation = [
-  { name: 'Home', to: '/' },
-  { name: 'Products', to: '/products' },
-  { name: 'About', to: '/about' },
-  { name: 'Contact', to: '/contact' }
-]
-
 const userMenuItems = [
   [{
     label: 'Profile',
@@ -68,38 +61,17 @@ const items = [
 
 <template>
 
-<div class="border-b bg-white dark:bg-gray-900">
+  <div class="border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between h-16 items-center">
         <!-- Logo -->
-        <NuxtLink to="/" class="font-bold text-xl">
-          YourLogo
-        </NuxtLink>
-
-        <!-- Navigation Links -->
-        <nav class="hidden md:flex space-x-4">
-          <UButton
-            v-for="item in navigation"
-            :key="item.name"
-            :to="item.to"
-            variant="ghost"
-            :class="$route.path === item.to ? 'text-primary' : ''"
-          >
-            {{ item.name }}
-          </UButton>
-        </nav>
+        <h3 class="text-lg font-semibold leading-6 text-center">
+          <NuxtLink to="/">
+            Yeah, That's such a good Louie!! 
+          </NuxtLink>
+        </h3>
 
         <div class="flex items-center space-x-4">
-          <!-- Search -->
-          <UInput
-            icon="i-heroicons-magnifying-glass-20-solid"
-            placeholder="Search..."
-            size="sm"
-            class="hidden sm:block w-48"
-          />
-          
-          <!-- Theme Switcher -->
-          <UColorModeButton />
 
           <UButton
             square
@@ -108,14 +80,23 @@ const items = [
             :icon="$colorMode.preference === 'dark' ? 'i-heroicons-moon' : 'i-heroicons-sun'"
             @click="toggleColorMode"
           />
-          
-          <!-- User Menu -->
-          <UDropdown :items="userMenuItems">
+
+          <UDropdown
+            v-if="user"
+            :items="items"
+          >
             <UButton
               color="gray"
               variant="ghost"
-              icon="i-heroicons-user-circle"
-            />
+              trailing-icon="i-heroicons-chevron-down-20-solid"
+            >
+              <UAvatar
+                :src="`https://github.com/${user.login}.png`"
+                :alt="user.login"
+                size="3xs"
+              />
+              {{ user.login }}
+            </UButton>
           </UDropdown>
 
           <!-- Mobile Menu Button -->
@@ -153,12 +134,6 @@ const items = [
 
   <UContainer class="min-h-screen flex flex-col my-4">
 
-    <h3 class="text-lg font-semibold leading-6 text-center">
-      <NuxtLink to="/">
-        Yeah, That's such a good Louie!! 
-      </NuxtLink>
-    </h3>
-
     <UCard>
       <template #header v-if="loggedIn">
         <div
@@ -178,23 +153,6 @@ const items = [
             :color="$route.path === '/optimistic-todos' ? 'primary' : 'gray'"
             variant="ghost"
           />
-          <UDropdown
-            v-if="user"
-            :items="items"
-          >
-            <UButton
-              color="gray"
-              variant="ghost"
-              trailing-icon="i-heroicons-chevron-down-20-solid"
-            >
-              <UAvatar
-                :src="`https://github.com/${user.login}.png`"
-                :alt="user.login"
-                size="3xs"
-              />
-              {{ user.login }}
-            </UButton>
-          </UDropdown>
         </div>
       </template>
       <NuxtPage />
