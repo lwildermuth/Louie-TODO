@@ -71,6 +71,26 @@ const items = [
           </NuxtLink>
         </h3>
 
+        <div
+          class="flex flex-wrap justify-end -mx-2 sm:mx-0"
+          v-if="loggedIn"
+        >
+          <UButton
+            to="/todos"
+            icon="i-heroicons-list-bullet"
+            label="Todos"
+            :color="$route.path === '/todos' ? 'primary' : 'gray'"
+            variant="ghost"
+          />
+          <UButton
+            to="/optimistic-todos"
+            icon="i-heroicons-sparkles"
+            label="Optimistic Todos"
+            :color="$route.path === '/optimistic-todos' ? 'primary' : 'gray'"
+            variant="ghost"
+          />
+        </div>
+
         <div class="flex items-center space-x-4">
 
           <UButton
@@ -107,29 +127,7 @@ const items = [
 
   <UContainer class="min-h-screen flex flex-col my-4">
 
-    <UCard>
-      <template #header v-if="loggedIn">
-        <div
-          class="flex flex-wrap justify-end -mx-2 sm:mx-0 w-full"
-        >
-          <UButton
-            to="/todos"
-            icon="i-heroicons-list-bullet"
-            label="Todos"
-            :color="$route.path === '/todos' ? 'primary' : 'gray'"
-            variant="ghost"
-          />
-          <UButton
-            to="/optimistic-todos"
-            icon="i-heroicons-sparkles"
-            label="Optimistic Todos"
-            :color="$route.path === '/optimistic-todos' ? 'primary' : 'gray'"
-            variant="ghost"
-          />
-        </div>
-      </template>
-      <NuxtPage />
-    </UCard>
+    <NuxtPage />
 
     <footer v-if="loggedIn" class="text-center mt-2">
       <NuxtLink
