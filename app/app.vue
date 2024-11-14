@@ -63,7 +63,7 @@ const items = [
 
   <div class="border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-end sm:justify-between h-16 items-center">
+      <div class="flex justify-between h-16 items-center">
         <!-- Logo -->
         <h3 class="text-lg font-semibold leading-6 text-center hidden sm:block">
           <NuxtLink to="/">
