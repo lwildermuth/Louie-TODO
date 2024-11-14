@@ -4,6 +4,8 @@ import type { DropdownItem } from '#ui/types'
 const { loggedIn, user, clear } = useUserSession()
 const colorMode = useColorMode()
 
+const isMobileMenuOpen = ref(false)
+
 watch(loggedIn, () => {
   if (!loggedIn.value) {
     navigateTo('/')
@@ -29,6 +31,30 @@ useSeoMeta({
   twitterCard: 'summary_large_image'
 })
 
+const navigation = [
+  { name: 'Home', to: '/' },
+  { name: 'Products', to: '/products' },
+  { name: 'About', to: '/about' },
+  { name: 'Contact', to: '/contact' }
+]
+
+const userMenuItems = [
+  [{
+    label: 'Profile',
+    icon: 'i-heroicons-user-circle',
+    to: '/profile'
+  }, {
+    label: 'Settings',
+    icon: 'i-heroicons-cog-6-tooth',
+    to: '/settings'
+  }],
+  [{
+    label: 'Logout',
+    icon: 'i-heroicons-arrow-left-on-rectangle',
+    click: () => console.log('Logout clicked')
+  }]
+]
+
 const items = [
   [
     {
@@ -41,6 +67,90 @@ const items = [
 </script>
 
 <template>
+
+<div class="border-b bg-white dark:bg-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 items-center">
+        <!-- Logo -->
+        <NuxtLink to="/" class="font-bold text-xl">
+          YourLogo
+        </NuxtLink>
+
+        <!-- Navigation Links -->
+        <nav class="hidden md:flex space-x-4">
+          <UButton
+            v-for="item in navigation"
+            :key="item.name"
+            :to="item.to"
+            variant="ghost"
+            :class="$route.path === item.to ? 'text-primary' : ''"
+          >
+            {{ item.name }}
+          </UButton>
+        </nav>
+
+        <div class="flex items-center space-x-4">
+          <!-- Search -->
+          <UInput
+            icon="i-heroicons-magnifying-glass-20-solid"
+            placeholder="Search..."
+            size="sm"
+            class="hidden sm:block w-48"
+          />
+          
+          <!-- Theme Switcher -->
+          <UColorModeButton />
+
+          <UButton
+            square
+            variant="ghost"
+            color="black"
+            :icon="$colorMode.preference === 'dark' ? 'i-heroicons-moon' : 'i-heroicons-sun'"
+            @click="toggleColorMode"
+          />
+          
+          <!-- User Menu -->
+          <UDropdown :items="userMenuItems">
+            <UButton
+              color="gray"
+              variant="ghost"
+              icon="i-heroicons-user-circle"
+            />
+          </UDropdown>
+
+          <!-- Mobile Menu Button -->
+          <UButton
+            class="md:hidden"
+            color="gray"
+            variant="ghost"
+            icon="i-heroicons-bars-3"
+            @click="isMobileMenuOpen = !isMobileMenuOpen"
+          />
+        </div>
+      </div>
+
+      <!-- Mobile Menu -->
+      <UCard
+        v-if="isMobileMenuOpen"
+        class="md:hidden py-2 mt-2"
+      >
+        <UButton
+          v-for="item in navigation"
+          :key="item.name"
+          :to="item.to"
+          block
+          variant="ghost"
+          class="mb-1"
+          :class="$route.path === item.to ? 'text-primary' : ''"
+        >
+          {{ item.name }}
+        </UButton>
+      </UCard>
+    </div>
+  </div>
+
+
+
   <UContainer class="min-h-screen flex flex-col my-4">
 
     <h3 class="text-lg font-semibold leading-6 text-center">
@@ -48,16 +158,6 @@ const items = [
         Yeah, That's such a good Louie!! 
       </NuxtLink>
     </h3>
-
-    <div class="mb-2 text-right">
-      <UButton
-        square
-        variant="ghost"
-        color="black"
-        :icon="$colorMode.preference === 'dark' ? 'i-heroicons-moon' : 'i-heroicons-sun'"
-        @click="toggleColorMode"
-      />
-    </div>
 
     <UCard>
       <template #header v-if="loggedIn">
