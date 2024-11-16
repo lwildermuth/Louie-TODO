@@ -67,7 +67,7 @@ const items = [
         <!-- Logo -->
         <h3 class="text-lg font-semibold leading-6 text-center hidden sm:block">
           <NuxtLink to="/">
-            Yeah, That's such a good Louie!! 
+            Get Stuff Done!! 
           </NuxtLink>
         </h3>
 
@@ -130,31 +130,7 @@ const items = [
       </div>
     </div>
   </div>
-
-
-
-  <UContainer class="min-h-screen flex flex-col my-4">
-
-    <NuxtPage />
-
-    <footer v-if="loggedIn" class="text-center mt-2">
-      <NuxtLink
-        href=""
-        target="_blank"
-        class="text-sm text-gray-500 hover:text-gray-700"
-      >
-        We can make these link to anywhere
-      </NuxtLink>
-      ·
-      <NuxtLink
-        href=""
-        target="_blank"
-        class="text-sm text-gray-500 hover:text-gray-700"
-      >
-        This would be another link
-      </NuxtLink>
-    </footer>
-  </UContainer>
+  <NuxtPage />
   <UNotifications />
 </template>
 
