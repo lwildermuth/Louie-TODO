@@ -6,6 +6,14 @@ const colorMode = useColorMode()
 
 const isMobileMenuOpen = ref(false)
 
+function toggleMobileMenu() {
+  isMobileMenuOpen.value = !isMobileMenuOpen.value
+}
+
+function closeMobileMenu() {
+  isMobileMenuOpen.value = false
+}
+
 watch(loggedIn, () => {
   if (!loggedIn.value) {
     navigateTo('/')
@@ -60,8 +68,7 @@ const items = [
 </script>
 
 <template>
-
-  <div class="border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+  <div class="border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 fixed w-full left-0 top-0">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between h-16 items-center">
         <!-- Logo -->
@@ -79,8 +86,9 @@ const items = [
           class="flex sm:hidden"
         />
 
+        <!-- Desktop navigation -->
         <div
-          class="hidden sm:flex flex-wrap justify-end -mx-2 sm:mx-0 "
+          class="hidden sm:flex flex-wrap justify-end -mx-2 sm:mx-0"
           v-if="loggedIn"
         >
           <UButton
@@ -100,7 +108,6 @@ const items = [
         </div>
 
         <div class="flex items-center space-x-4">
-
           <UButton
             square
             variant="ghost"
@@ -125,12 +132,116 @@ const items = [
               {{ user.login }}
             </UButton>
           </UDropdown>
-
         </div>
       </div>
     </div>
   </div>
-  <NuxtPage />
+
+  <!-- Mobile Navigation -->
+  <div>
+    <!-- Backdrop -->
+    <div
+      v-if="isMobileMenuOpen"
+      class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity z-40"
+      @click="closeMobileMenu"
+    />
+
+    <!-- Sliding sidebar -->
+    <div
+      class="fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-gray-900 transform transition-transform duration-300 ease-in-out"
+      :class="isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'"
+    >
+      <!-- Mobile menu content -->
+      <div class="h-full flex flex-col">
+        <!-- Header -->
+        <div class="px-4 py-6 border-b border-gray-200 dark:border-gray-700">
+          <div class="flex items-center justify-between">
+            <NuxtLink 
+              to="/"
+              class="text-lg font-semibold"
+              @click="closeMobileMenu"
+            >
+              Get Stuff Done!!
+            </NuxtLink>
+            <UButton
+              square
+              color="gray"
+              variant="ghost"
+              icon="i-heroicons-x-mark"
+              @click="closeMobileMenu"
+            />
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="flex-1 px-4 py-4 space-y-2" v-if="loggedIn">
+          <UButton
+            to="/todos"
+            icon="i-heroicons-list-bullet"
+            label="Todos"
+            :color="$route.path === '/todos' ? 'primary' : 'gray'"
+            variant="ghost"
+            block
+            @click="closeMobileMenu"
+          />
+          <UButton
+            to="/optimistic-todos"
+            icon="i-heroicons-sparkles"
+            label="Optimistic Todos"
+            :color="$route.path === '/optimistic-todos' ? 'primary' : 'gray'"
+            variant="ghost"
+            block
+            @click="closeMobileMenu"
+          />
+        </nav>
+
+        <!-- User section -->
+        <div class="px-4 py-4 border-t border-gray-200 dark:border-gray-700" v-if="user">
+          <div class="flex items-center space-x-3 mb-4">
+            <UAvatar
+              :src="`https://github.com/${user.login}.png`"
+              :alt="user.login"
+              size="sm"
+            />
+            <span class="text-sm font-medium">{{ user.login }}</span>
+          </div>
+          <UButton
+            to="/profile"
+            icon="i-heroicons-user-circle"
+            label="Profile"
+            color="gray"
+            variant="ghost"
+            block
+            class="mb-2"
+            @click="closeMobileMenu"
+          />
+          <UButton
+            to="/settings"
+            icon="i-heroicons-cog-6-tooth"
+            label="Settings"
+            color="gray"
+            variant="ghost"
+            block
+            class="mb-2"
+            @click="closeMobileMenu"
+          />
+          <UButton
+            icon="i-heroicons-arrow-left-on-rectangle"
+            label="Logout"
+            color="gray"
+            variant="ghost"
+            block
+            @click="clear"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add margin-top to account for fixed header -->
+  <div class="pt-16">
+    <NuxtPage />
+  </div>
   <UNotifications />
 </template>
 

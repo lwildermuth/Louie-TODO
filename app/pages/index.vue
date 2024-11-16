@@ -4,7 +4,7 @@
       <ParticleBackground />
     </ClientOnly>
   </div>
-  <UContainer class="flex flex-col items-center justify-center my-4 min-h-screen">
+  <UContainer class="flex flex-col items-center justify-center min-h-screen">
     <div class="login">
       <h1 class="text-3xl font-bold">Get stuff done! </h1>
       <p class="text-base text-gray-500">Welcome to our hub of getting shit done!!</p>
@@ -43,20 +43,20 @@
   gap-4
   text-center
   relative
-  p-4
+  p-10
   border
   border-solid
   border-gray-200
   dark:border-gray-700
-  bg-white
-  dark:bg-gray-800
+  bg-white/30
+  dark:bg-gray-800/30
+  backdrop-blur-md
   rounded-2xl
   shadow
   ;
 }
 </style>
 
-<!-- components/ParticleBackground.vue -->
 <script setup>
 import * as THREE from 'three'
 import { onMounted, onBeforeUnmount, watch } from 'vue'
@@ -72,15 +72,16 @@ const particleGeometry = new THREE.BufferGeometry()
 const positions = new Float32Array(particleCount * 3)
 const velocities = new Float32Array(particleCount * 3)
 
-// Initialize particle positions and velocities
+// Initialize particle positions and velocities with slower speed
 for (let i = 0; i < particleCount * 3; i += 3) {
   positions[i] = (Math.random() - 0.5) * 10
   positions[i + 1] = (Math.random() - 0.5) * 10
   positions[i + 2] = (Math.random() - 0.5) * 10
 
-  velocities[i] = (Math.random() - 0.5) * 0.01
-  velocities[i + 1] = (Math.random() - 0.5) * 0.01
-  velocities[i + 2] = (Math.random() - 0.5) * 0.01
+  // Reduced velocity by factor of 5
+  velocities[i] = (Math.random() - 0.5) * 0.002
+  velocities[i + 1] = (Math.random() - 0.5) * 0.002
+  velocities[i + 2] = (Math.random() - 0.5) * 0.002
 }
 
 particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
@@ -108,11 +109,26 @@ const init = () => {
     container.appendChild(renderer.domElement)
   }
 
+  // Create circular texture for particles
+  const canvas = document.createElement('canvas')
+  const context = canvas.getContext('2d')
+  canvas.width = 64
+  canvas.height = 64
+  context.beginPath()
+  context.arc(32, 32, 30, 0, Math.PI * 2)
+  context.closePath()
+  context.fillStyle = '#ffffff'
+  context.fill()
+
+  const circleTexture = new THREE.CanvasTexture(canvas)
+
   const particleMaterial = new THREE.PointsMaterial({
-    size: 0.05,
+    size: 0.08,
+    map: circleTexture,
     transparent: true,
     opacity: 0.6,
     blending: THREE.AdditiveBlending,
+    depthWrite: false,
   })
 
   particles = new THREE.Points(particleGeometry, particleMaterial)
@@ -140,7 +156,8 @@ const animate = () => {
   }
 
   particles.geometry.attributes.position.needsUpdate = true
-  particles.rotation.y += 0.001
+  // Reduced rotation speed
+  particles.rotation.y += 0.0005
 
   renderer.render(scene, camera)
 }
