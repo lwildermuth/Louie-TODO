@@ -180,7 +180,41 @@ const { mutate: deleteTodo } = useMutation({
     class="flex flex-col gap-4"
     @submit.prevent="addTodo(newTodo)"
   >
-    <div class="flex items-center gap-2">
+    <UContainer>
+      <div class="list-card">
+        <ul class="divide-y divide-gray-200 dark:divide-gray-800">
+          <li
+            v-for="todo of todos"
+            :key="todo.id"
+            class="flex items-center gap-4 py-2"
+          >
+            <span
+              class="flex-1 font-medium"
+              :class="{
+                'text-gray-500': todo.completed || todo.id < 0,
+                'line-through': todo.completed
+              }"
+            >{{ todo.title }}</span>
+
+            <UToggle
+              :model-value="Boolean(todo.completed)"
+              :disabled="todo.id < 0"
+              @update:model-value="toggleTodo(todo)"
+            />
+
+            <UButton
+              color="red"
+              variant="soft"
+              size="2xs"
+              icon="i-heroicons-x-mark-20-solid"
+              :disabled="todo.id < 0"
+              @click="deleteTodo(todo)"
+            />
+          </li>
+        </ul>
+      </div>
+    </UContainer>
+    <div class="input-wrap">
       <UInput
         v-model="newTodo"
         name="todo"
@@ -197,36 +231,42 @@ const { mutate: deleteTodo } = useMutation({
         :disabled="newTodo.trim().length === 0"
       />
     </div>
-
-    <ul class="divide-y divide-gray-200 dark:divide-gray-800">
-      <li
-        v-for="todo of todos"
-        :key="todo.id"
-        class="flex items-center gap-4 py-2"
-      >
-        <span
-          class="flex-1 font-medium"
-          :class="{
-            'text-gray-500': todo.completed || todo.id < 0,
-            'line-through': todo.completed
-          }"
-        >{{ todo.title }}</span>
-
-        <UToggle
-          :model-value="Boolean(todo.completed)"
-          :disabled="todo.id < 0"
-          @update:model-value="toggleTodo(todo)"
-        />
-
-        <UButton
-          color="red"
-          variant="soft"
-          size="2xs"
-          icon="i-heroicons-x-mark-20-solid"
-          :disabled="todo.id < 0"
-          @click="deleteTodo(todo)"
-        />
-      </li>
-    </ul>
   </form>
 </template>
+
+<style>
+.list-card {
+  @apply
+  border
+  border-solid
+  border-gray-200
+  dark:border-gray-800
+  bg-white
+  dark:bg-gray-800
+  backdrop-blur-md
+  rounded-2xl
+  shadow
+  mt-3
+  ;
+}
+
+.input-wrap {
+  @apply
+  flex
+  flex
+  items-center
+  gap-2
+  fixed
+  bottom-0
+  left-0
+  p-4
+  border
+  bg-white
+  border-solid
+  border-gray-200
+  mx-2
+  rounded-t-2xl
+  ;
+  width: calc(100% - 1rem);
+}
+</style>
