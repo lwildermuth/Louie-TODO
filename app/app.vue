@@ -182,6 +182,7 @@ const items = [
             :color="$route.path === '/todos' ? 'primary' : 'gray'"
             variant="ghost"
             block
+            class="justify-start"
             @click="closeMobileMenu"
           />
           <UButton
@@ -191,6 +192,7 @@ const items = [
             :color="$route.path === '/optimistic-todos' ? 'primary' : 'gray'"
             variant="ghost"
             block
+            class="justify-start"
             @click="closeMobileMenu"
           />
         </nav>
@@ -206,30 +208,11 @@ const items = [
             <span class="text-sm font-medium">{{ user.login }}</span>
           </div>
           <UButton
-            to="/profile"
-            icon="i-heroicons-user-circle"
-            label="Profile"
-            color="gray"
-            variant="ghost"
-            block
-            class="mb-2"
-            @click="closeMobileMenu"
-          />
-          <UButton
-            to="/settings"
-            icon="i-heroicons-cog-6-tooth"
-            label="Settings"
-            color="gray"
-            variant="ghost"
-            block
-            class="mb-2"
-            @click="closeMobileMenu"
-          />
-          <UButton
             icon="i-heroicons-arrow-left-on-rectangle"
             label="Logout"
             color="gray"
             variant="ghost"
+            class="justify-start"
             block
             @click="clear"
           />
@@ -239,7 +222,7 @@ const items = [
   </div>
 
   <!-- Add margin-top to account for fixed header -->
-  <div class="pt-16">
+  <div class="pt-16 text-left">
     <NuxtPage />
   </div>
   <UNotifications />
