@@ -247,6 +247,7 @@ const { mutate: deleteTodo } = useMutation({
   rounded-2xl
   shadow
   mt-3
+  w-full
   ;
 }
 
@@ -262,8 +263,10 @@ const { mutate: deleteTodo } = useMutation({
   p-4
   border
   bg-white
+  dark:bg-gray-900
   border-solid
   border-gray-200
+  dark:border-gray-700
   mx-2
   rounded-t-2xl
   ;
